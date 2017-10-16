@@ -1,0 +1,59 @@
+buildscript {
+    repositories.jcenter()
+    dependencies {
+        classpath("org.springframework:springloaded:1.2.7.RELEASE")
+    }
+}
+plugins {
+    id 'org.springframework.boot' version '1.5.7.RELEASE'
+}
+
+ext {
+    ext {
+        groovyVersion = '2.4.12'
+        gradleWrapperVersion = '4.2.1'
+        flowVersion = '1.0-SNAPSHOT'
+    }
+    mainClassName = "app.Application" 
+}
+
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+    maven { url 'https://maven.vaadin.com/vaadin-addons' }
+    maven { url 'https://repo.vaadin.com/nexus/content/repositories/flow' }
+    maven { url 'https://repo.vaadin.com/nexus/content/repositories/flow-snapshots' }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+    baseName = 'app'
+    version = null // no version in the filename
+    manifest {
+        attributes 'Main-Class': mainClassName // Allow to run with `java -jar app.jar`
+    }
+}
+
+bootRun.systemProperties = System.properties // pass sysprops down to bootRun, so we can add them in configs in intellij
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleWrapperVersion
+}
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile "com.vaadin:flow:${flowVersion}"
+    compile "com.vaadin:flow-components:${flowVersion}"
+    compile 'com.vaadin:flow-spring-addon:1.0-SNAPSHOT'
+
+    // manual added (for now) since the deps versions are useless to gradel
+    compile 'org.webjars.bower:github-com-webcomponents-shadycss:v1.0.6'
+    compile 'org.webjars.bower:github-com-webcomponents-webcomponentsjs:v1.0.8'
+    compile 'org.webjars.bower:github-com-vaadin-vaadin-control-state-mixin:v1.1.4'
+    compile 'org.webjars.bower:github-com-polymer-polymer:v2.1.1'
+    compile 'org.webjars.bower:webcomponentsjs:1.0.14'
+}
