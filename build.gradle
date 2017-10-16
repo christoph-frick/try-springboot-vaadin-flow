@@ -49,8 +49,9 @@ dependencies {
     compile "com.vaadin:flow:${flowVersion}"
     compile "com.vaadin:flow-components:${flowVersion}"
     compile 'com.vaadin:flow-spring-addon:1.0-SNAPSHOT'
+    compile 'org.webjars.bower:github-com-vaadin-vaadin-valo-theme:v2.0.0-alpha2'
 
-    // manual added (for now) since the deps versions are useless to gradel
+    // XXX: explicit overrides for some of the "odd" transient deps from some of the bower webjars
     compile 'org.webjars.bower:github-com-webcomponents-shadycss:v1.0.6'
     compile 'org.webjars.bower:github-com-webcomponents-webcomponentsjs:v1.0.8'
     compile 'org.webjars.bower:github-com-vaadin-vaadin-control-state-mixin:v1.1.4'

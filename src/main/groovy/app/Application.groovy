@@ -3,6 +3,7 @@ package app
 import com.vaadin.router.Route
 import com.vaadin.ui.Composite
 import com.vaadin.ui.button.Button
+import com.vaadin.ui.common.HtmlImport
 import com.vaadin.ui.html.Div
 import com.vaadin.ui.html.H1
 import com.vaadin.ui.textfield.TextField
@@ -22,6 +23,7 @@ class Application extends SpringBootServletInitializer {
 
 @Route('')
 @Slf4j
+@HtmlImport('frontend:///styles.html')
 class MainLayout extends Composite<Div> {
     MainLayout() {
         H1 label
