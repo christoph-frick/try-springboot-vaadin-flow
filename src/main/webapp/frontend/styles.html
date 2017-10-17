@@ -1,4 +1,24 @@
-<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-text-field.html">
-<link rel="import" href="bower_components/vaadin-text-field/vaadin-text-field.html">
 <link rel="import" href="bower_components/vaadin-valo-theme/vaadin-button.html">
-<link rel="import" href="bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-text-field.html">
+
+<custom-style>
+    <style is="custom-style" include="valo-colors valo-typography">
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 1ex 1em;
+
+            --app-primary-color: var(--valo-primary-color);
+            --app-secondary-color: var(--valo-body-text-color);
+
+            background-color: var(--valo-shade-10pct);
+            color: var(--valo-body-text-color);
+            font-family: var(--valo-font-family);
+        }
+    </style>
+</custom-style>
+
