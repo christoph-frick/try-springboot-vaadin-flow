@@ -46,16 +46,18 @@ class MainLayout extends Composite<Div> {
         H1 label
         TextField input
         content.add(
-                label = new H1("Hello world"),
+                label = new H1(),
                 input = new TextField().with {
                     addValueChangeListener {
                         label.text = "Hello ${it.value ?: "World"}"
                     }
+                    value = "Flow"
+                    focus()
                     it
                 },
-                new Button("Greet!", {
+                new Button("Greet the server log", {
                     log.info "Hello ${input.value ?: "World"} to the server log"
-                })
+                }),
         )
     }
 }
