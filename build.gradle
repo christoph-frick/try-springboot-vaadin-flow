@@ -1,29 +1,35 @@
 buildscript {
-    repositories.jcenter()
-    dependencies {
-        classpath("org.springframework:springloaded:1.2.7.RELEASE")
+    ext {
+        springBootVersion = '2.0.0.RELEASE'
     }
-}
-plugins {
-    id 'org.springframework.boot' version '1.5.7.RELEASE'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 ext {
     ext {
-        groovyVersion = '2.4.12'
-        gradleWrapperVersion = '4.2.1'
-        flowVersion = '1.0-SNAPSHOT'
+        groovyVersion = '2.4.14'
+        gradleWrapperVersion = '4.6'
+        vaadinVersion = '10.0.0.beta1'
+        springFlowVersion = '1.0.0.beta2'
     }
     mainClassName = "app.Application" 
 }
 
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 apply plugin: 'groovy'
 
 repositories {
     jcenter()
+    maven { url 'http://repo.spring.io/milestone/' } // FIXME: needed for flow-spring-addon.  there seems no easy way to prevent the need for the M7 release from there
     maven { url 'https://maven.vaadin.com/vaadin-addons' }
-    maven { url 'https://repo.vaadin.com/nexus/content/repositories/flow' }
-    maven { url 'https://repo.vaadin.com/nexus/content/repositories/flow-snapshots' }
+    maven { url 'https://maven.vaadin.com/vaadin-prereleases' }
+    maven { url 'https://dl.bintray.com/webjars/maven' }
 }
 
 sourceCompatibility = 1.8
@@ -45,16 +51,14 @@ task wrapper(type: Wrapper) {
 
 dependencies {
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compile 'org.springframework.boot:spring-boot-dependencies:2.0.0.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile "com.vaadin:flow:${flowVersion}"
-    compile "com.vaadin:flow-components:${flowVersion}"
-    compile 'com.vaadin:flow-spring-addon:1.0-SNAPSHOT'
-    compile 'org.webjars.bower:github-com-vaadin-vaadin-valo-theme:v2.0.0-alpha2'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile "com.vaadin:vaadin-core:${vaadinVersion}"
+    compile "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
 
-    // XXX: explicit overrides for some of the "odd" transient deps from some of the bower webjars
-    compile 'org.webjars.bower:github-com-webcomponents-shadycss:v1.0.6'
-    compile 'org.webjars.bower:github-com-webcomponents-webcomponentsjs:v1.0.8'
-    compile 'org.webjars.bower:github-com-vaadin-vaadin-control-state-mixin:v1.1.4'
-    compile 'org.webjars.bower:github-com-polymer-polymer:v2.1.1'
-    compile 'org.webjars.bower:webcomponentsjs:1.0.14'
+    // XXX overrides, gradle can't deal with yet
+    compile 'org.webjars.bowergithub.vaadin:vaadin-lumo-styles:1.0.0-beta2'
+    compile 'org.webjars.bowergithub.vaadin:vaadin-item:2.0.0-beta2'
+    compile 'org.webjars.bowergithub.vaadin:vaadin-list-mixin:2.0.0-beta1'
 }

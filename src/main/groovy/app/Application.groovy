@@ -1,21 +1,22 @@
 package app
 
-import com.vaadin.router.Route
-import com.vaadin.ui.Composite
-import com.vaadin.ui.button.Button
-import com.vaadin.ui.common.HtmlImport
-import com.vaadin.ui.html.Div
-import com.vaadin.ui.html.H1
-import com.vaadin.ui.textfield.TextField
+import com.vaadin.flow.component.Composite
+import com.vaadin.flow.component.HasValue
+import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.dependency.HtmlImport
+import com.vaadin.flow.component.html.Div
+import com.vaadin.flow.component.html.H1
+import com.vaadin.flow.component.page.BodySize
+import com.vaadin.flow.component.page.Viewport
+import com.vaadin.flow.component.textfield.TextField
+import com.vaadin.flow.data.value.ValueChangeMode
+import com.vaadin.flow.router.Route
+import com.vaadin.flow.theme.Theme
+import com.vaadin.flow.theme.lumo.Lumo
 import groovy.util.logging.Slf4j
-import org.apache.coyote.http2.Http2Protocol
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer
-import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory
-import org.springframework.boot.web.support.SpringBootServletInitializer
-import org.springframework.context.annotation.Bean
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 class Application extends SpringBootServletInitializer {
@@ -24,23 +25,14 @@ class Application extends SpringBootServletInitializer {
         // further config...
         app.run(args)
     }
-
-    // enable http2
-    @Bean
-    EmbeddedServletContainerCustomizer tomcatCustomizer() {
-        { container ->
-            if (container instanceof TomcatEmbeddedServletContainerFactory) {
-                (container as TomcatEmbeddedServletContainerFactory).addConnectorCustomizers({ connector ->
-                    connector.addUpgradeProtocol(new Http2Protocol())
-                } as TomcatConnectorCustomizer)
-            }
-        }
-    }
 }
 
 @Route('')
 @Slf4j
+@Theme(Lumo)
 @HtmlImport('frontend:///styles.html')
+@BodySize(height = "100vh", width = "100vw")
+@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 class MainLayout extends Composite<Div> {
     MainLayout() {
         H1 label
@@ -48,9 +40,10 @@ class MainLayout extends Composite<Div> {
         content.add(
                 label = new H1(),
                 input = new TextField().with {
-                    addValueChangeListener {
+                    addValueChangeListener({
                         label.text = "Hello ${it.value ?: "World"}"
-                    }
+                    } as HasValue.ValueChangeListener)
+                    valueChangeMode = ValueChangeMode.EAGER
                     value = "Flow"
                     focus()
                     it
