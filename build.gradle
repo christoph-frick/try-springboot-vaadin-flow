@@ -1,12 +1,17 @@
 buildscript {
     ext {
         springBootVersion = '2.0.0.RELEASE'
+        vaadinFlowPluginVersion = "1.0.0-M1"
     }
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("com.devsoap:gradle-vaadin-flow-plugin:${vaadinFlowPluginVersion}")
     }
 }
 
@@ -14,19 +19,19 @@ ext {
     ext {
         groovyVersion = '2.4.14'
         gradleWrapperVersion = '4.6'
-        vaadinVersion = '10.0.0.beta1'
-        springFlowVersion = '1.0.0.beta2'
+        vaadinVersion = '10.0.0.beta3'
+        springFlowVersion = '1.0.0.beta3'
     }
     mainClassName = "app.Application" 
 }
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.devsoap.vaadin-flow"
 apply plugin: 'groovy'
 
 repositories {
     jcenter()
-    maven { url 'http://repo.spring.io/milestone/' } // FIXME: needed for flow-spring-addon.  there seems no easy way to prevent the need for the M7 release from there
     maven { url 'https://maven.vaadin.com/vaadin-addons' }
     maven { url 'https://maven.vaadin.com/vaadin-prereleases' }
     maven { url 'https://dl.bintray.com/webjars/maven' }
@@ -51,14 +56,8 @@ task wrapper(type: Wrapper) {
 
 dependencies {
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
-    compile 'org.springframework.boot:spring-boot-dependencies:2.0.0.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-devtools'
     compile "com.vaadin:vaadin-core:${vaadinVersion}"
     compile "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
-
-    // XXX overrides, gradle can't deal with yet
-    compile 'org.webjars.bowergithub.vaadin:vaadin-lumo-styles:1.0.0-beta2'
-    compile 'org.webjars.bowergithub.vaadin:vaadin-item:2.0.0-beta2'
-    compile 'org.webjars.bowergithub.vaadin:vaadin-list-mixin:2.0.0-beta1'
 }
