@@ -1,0 +1,20 @@
+<link rel="import" href="../bower_components/app-layout/app-layout.html">
+<dom-module id="my-app">
+    <template>
+        <app-header reveals>
+            <app-toolbar>
+                <div main-title id="title"></div>
+                <div id="menu"></div>
+            </app-toolbar>
+        </app-header>
+        <slot></slot>
+    </template>
+    <script>
+        class MyAppElement extends Polymer.Element {
+            static get is() {
+                return 'my-app'
+            }
+        }
+        customElements.define(MyAppElement.is, MyAppElement);
+    </script>
+</dom-module>

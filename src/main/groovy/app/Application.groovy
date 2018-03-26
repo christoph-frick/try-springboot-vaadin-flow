@@ -1,21 +1,19 @@
 package app
 
 import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.Tag
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.component.html.Div
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
+import com.vaadin.flow.component.polymertemplate.Id
+import com.vaadin.flow.component.polymertemplate.PolymerTemplate
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.Binder
-import com.vaadin.flow.router.BeforeEvent
-import com.vaadin.flow.router.HasUrlParameter
-import com.vaadin.flow.router.OptionalParameter
-import com.vaadin.flow.router.ParentLayout
-import com.vaadin.flow.router.Route
-import com.vaadin.flow.router.RouterLayout
-import com.vaadin.flow.router.RouterLink
+import com.vaadin.flow.router.*
+import com.vaadin.flow.templatemodel.TemplateModel
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 import groovy.util.logging.Slf4j
@@ -41,32 +39,47 @@ class MainLayout extends Div implements RouterLayout {
 }
 
 @ParentLayout(MainLayout)
-class MenuLayout extends Div implements RouterLayout {
+@Tag('my-app')
+@HtmlImport('frontend:///layout.html')
+class MenuLayout extends PolymerTemplate<TemplateModel> implements RouterLayout {
+
+    @Id("title")
+    Div titleDiv
+
+    @Id("menu")
+    Div menu
+
     MenuLayout() {
-        addClassName('menu')
         addMenuItem("Dashboard", DashboardView)
         addMenuItem("Hello", HelloView)
+        title = "My App"
     }
+
     def addMenuItem(String label, Class<? extends Component> viewClass) {
-        add(new RouterLink(label, viewClass))
+        menu.add(new RouterLink(label, viewClass))
     }
+
+    void setTitle(String title) {
+        this.titleDiv.text = title
+    }
+
 }
 
 class HelloRequest {
     String text
 }
 
-@Route(value="", layout = MenuLayout)
+@Route(value = "", layout = MenuLayout)
 class DashboardView extends Div {
     DashboardView() {
         def input = new TextField("Say hello to")
         def binder = new Binder<HelloRequest>(HelloRequest)
         binder
-            .forField(input)
-            .bind("text")
+                .forField(input)
+                .bind("text")
         binder.bean = new HelloRequest()
         def button = new Button("Go", {
-            getUI().ifPresent{ it.navigate("hello/${binder.bean.text}") }
+            getUI().ifPresent { it.navigate("hello/${binder.bean.text}") }
         })
         add(
                 new FormLayout(
@@ -77,13 +90,14 @@ class DashboardView extends Div {
     }
 }
 
-@Route(value="hello", layout = MenuLayout)
+@Route(value = "hello", layout = MenuLayout)
 class HelloView extends Div implements HasUrlParameter<String> {
     HelloView() {
         text = "Dashboard"
     }
+
     @Override
     void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
-        setText("Hello, ${parameter?:"World"}!")
+        setText("Hello, ${parameter ?: "World"}!")
     }
 }

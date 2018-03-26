@@ -60,4 +60,6 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-devtools'
     compile "com.vaadin:vaadin-core:${vaadinVersion}"
     compile "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
+
+    compile 'org.webjars.bowergithub.polymerelements:app-layout:2.0.4'
 }
