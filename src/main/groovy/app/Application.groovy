@@ -16,7 +16,6 @@ import com.vaadin.flow.router.*
 import com.vaadin.flow.templatemodel.TemplateModel
 import com.vaadin.flow.theme.AbstractTheme
 import com.vaadin.flow.theme.Theme
-import com.vaadin.flow.theme.lumo.Lumo
 import groovy.util.logging.Slf4j
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -31,9 +30,9 @@ class Application extends SpringBootServletInitializer {
     }
 }
 
-@HtmlImport("frontend://bower_components/vaadin-material-theme/color.html")
-@HtmlImport("frontend://bower_components/vaadin-material-theme/typography.html")
-@HtmlImport("frontend://bower_components/vaadin-material-theme/font-icons.html")
+@HtmlImport("frontend://bower_components/vaadin-material-styles/color.html")
+@HtmlImport("frontend://bower_components/vaadin-material-styles/typography.html")
+@HtmlImport("frontend://bower_components/vaadin-material-styles/font-icons.html")
 class Material implements AbstractTheme {
 
     @Override

@@ -65,9 +65,6 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-devtools'
     implementation vaadin.platform()
     implementation "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
-}
-
-vaadinClientDependencies {
-    bower 'vaadin/vaadin-material-theme'
-    bower 'PolymerElements/app-layout'
+    implementation 'org.webjars.bowergithub.polymerelements:app-layout:2.1.0'
+    implementation 'org.webjars.bowergithub.vaadin:vaadin-material-styles:1.1.0-alpha2'
 }
