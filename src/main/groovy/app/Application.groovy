@@ -14,6 +14,7 @@ import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.Binder
 import com.vaadin.flow.router.*
 import com.vaadin.flow.templatemodel.TemplateModel
+import com.vaadin.flow.theme.AbstractTheme
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 import groovy.util.logging.Slf4j
@@ -30,9 +31,34 @@ class Application extends SpringBootServletInitializer {
     }
 }
 
+@HtmlImport("frontend://bower_components/vaadin-material-theme/color.html")
+@HtmlImport("frontend://bower_components/vaadin-material-theme/typography.html")
+@HtmlImport("frontend://bower_components/vaadin-material-theme/font-icons.html")
+class Material implements AbstractTheme {
+
+    @Override
+    String getBaseUrl() {
+        return "src/"
+    }
+
+    @Override
+    String getThemeUrl() {
+        return "theme/material/"
+    }
+
+    @Override
+    List<String> getHeaderInlineContents() {
+        ["""
+            <custom-style>
+             <style include="material-color material-typography"></style>
+            </custom-style>
+        """]
+    }
+}
+
 @Slf4j
-@Theme(Lumo)
-@HtmlImport('frontend:///styles.html')
+@Theme(Material)
+@HtmlImport('frontend://styles.html')
 @BodySize(height = "100vh", width = "100vw")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 class MainLayout extends Div implements RouterLayout {
@@ -40,7 +66,7 @@ class MainLayout extends Div implements RouterLayout {
 
 @ParentLayout(MainLayout)
 @Tag('my-app')
-@HtmlImport('frontend:///layout.html')
+@HtmlImport('frontend://layout.html')
 class MenuLayout extends PolymerTemplate<TemplateModel> implements RouterLayout {
 
     @Id("title")
@@ -69,7 +95,7 @@ class HelloRequest {
     String text
 }
 
-@Route(value = "", layout = MenuLayout)
+@Route(value = "dashboard", layout = MenuLayout)
 class DashboardView extends Div {
     DashboardView() {
         def input = new TextField("Say hello to")
