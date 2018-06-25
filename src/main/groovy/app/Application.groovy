@@ -39,14 +39,13 @@ class MainLayout extends Composite<Div> {
         TextField input
         content.add(
                 label = new H1(),
-                input = new TextField().with {
+                input = new TextField().tap {
                     addValueChangeListener({
                         label.text = "Hello ${it.value ?: "World"}"
                     } as HasValue.ValueChangeListener)
                     valueChangeMode = ValueChangeMode.EAGER
                     value = "Flow"
                     focus()
-                    it
                 },
                 new Button("Greet the server log", {
                     log.info "Hello ${input.value ?: "World"} to the server log"
