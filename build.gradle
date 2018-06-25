@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.0.RELEASE'
-        vaadinFlowPluginVersion = "1.0.0-M1"
+        springBootVersion = '2.0.2.RELEASE'
+        vaadinFlowPluginVersion = "1.0.0.M3"
     }
     repositories {
         mavenCentral()
@@ -17,10 +17,10 @@ buildscript {
 
 ext {
     ext {
-        groovyVersion = '2.4.14'
-        gradleWrapperVersion = '4.6'
-        vaadinVersion = '10.0.0.beta3'
-        springFlowVersion = '1.0.0.beta3'
+        groovyVersion = '2.5.0'
+        gradleWrapperVersion = '4.8.1'
+        vaadinVersion = '10.0.0'
+        springFlowVersion = '1.0.0.beta7'
     }
     mainClassName = "app.Application" 
 }
@@ -32,9 +32,7 @@ apply plugin: 'groovy'
 
 repositories {
     jcenter()
-    maven { url 'https://maven.vaadin.com/vaadin-addons' }
-    maven { url 'https://maven.vaadin.com/vaadin-prereleases' }
-    maven { url 'https://dl.bintray.com/webjars/maven' }
+    vaadin.repositories()
 }
 
 sourceCompatibility = 1.8
@@ -48,18 +46,24 @@ jar {
     }
 }
 
+vaadin {
+    version vaadinVersion
+}
+
 bootRun.systemProperties = System.properties // pass sysprops down to bootRun, so we can add them in configs in intellij
 
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
+    distributionType = Wrapper.DistributionType.ALL
 }
 
-dependencies {
-    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-devtools'
-    compile "com.vaadin:vaadin-core:${vaadinVersion}"
-    compile "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
+ext['groovy.version'] = groovyVersion
 
-    compile 'org.webjars.bowergithub.polymerelements:app-layout:2.0.4'
+dependencies {
+    implementation 'org.codehaus.groovy:groovy'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation vaadin.platform()
+    implementation "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
+    implementation 'org.webjars.bowergithub.polymerelements:app-layout:2.1.0'
 }
