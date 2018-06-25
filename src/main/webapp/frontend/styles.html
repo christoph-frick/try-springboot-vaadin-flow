@@ -5,7 +5,25 @@
         }
         body {
             margin: 0;
-            padding: var(--lumo-space-wide-m) var(--lumo-space-m);
+            padding: 0;
+        }
+        .menu:hover {
+            text-decoration: none;
+        }
+        .menu__title {
+            margin-top: var(--lumo-space-m);
+            margin-bottom: var(--lumo-space-m);
+        }
+        .menu__navitem {
+            user-select: none;
+        }
+        .menu__navitem[highlight] {
+            cursor: default;
+        }
+        .menu__navitem iron-icon {
+            padding: 0 8px 0 0;
+            box-sizing: border-box;
+            pointer-events: none;
         }
     </style>
 </custom-style>

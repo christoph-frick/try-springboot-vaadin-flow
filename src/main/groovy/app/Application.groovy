@@ -1,10 +1,16 @@
 package app
 
 import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.Text
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.component.html.Div
+import com.vaadin.flow.component.html.H1
+import com.vaadin.flow.component.icon.Icon
+import com.vaadin.flow.component.icon.VaadinIcon
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout
+import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
 import com.vaadin.flow.component.textfield.TextField
@@ -34,21 +40,41 @@ class Application extends SpringBootServletInitializer {
 
 @Slf4j
 @Theme(Lumo)
-@HtmlImport('frontend:///styles.html')
+@HtmlImport('frontend://styles.html')
 @BodySize(height = "100vh", width = "100vw")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 class MainLayout extends Div implements RouterLayout {
+    MainLayout() {
+        setSizeFull()
+    }
 }
 
 @ParentLayout(MainLayout)
-class MenuLayout extends Div implements RouterLayout {
+class MenuLayout extends HorizontalLayout implements RouterLayout {
+    VerticalLayout menu
     MenuLayout() {
-        addClassName('menu')
-        addMenuItem("Dashboard", DashboardView)
-        addMenuItem("Hello", HelloView)
+        setSizeFull()
+        add(
+            new Div(menu = new VerticalLayout()).tap{
+                setWidth("20em")
+                addClassName('menu')
+                element.setAttribute('theme', 'dark')
+            }
+        )
+        menu.add(new H1("My App").tap{
+            addClassName('menu__title')
+        })
+        addMenuItem(VaadinIcon.DASHBOARD, "Dashboard", DashboardView)
+        addMenuItem(VaadinIcon.ABACUS, "Hello", HelloView)
     }
-    def addMenuItem(String label, Class<? extends Component> viewClass) {
-        add(new RouterLink(label, viewClass))
+    def addMenuItem(VaadinIcon icon ,String label, Class<? extends Component> viewClass) {
+        menu.add(new RouterLink(null, viewClass).tap{
+            addClassName('menu__navitem')
+            add(
+                    new Icon(icon),
+                    new Text(label),
+            )
+        })
     }
 }
 
@@ -59,6 +85,7 @@ class HelloRequest {
 @Route(value="", layout = MenuLayout)
 class DashboardView extends Div {
     DashboardView() {
+        setSizeFull()
         def input = new TextField("Say hello to")
         def binder = new Binder<HelloRequest>(HelloRequest)
         binder
@@ -80,6 +107,7 @@ class DashboardView extends Div {
 @Route(value="hello", layout = MenuLayout)
 class HelloView extends Div implements HasUrlParameter<String> {
     HelloView() {
+        setSizeFull()
         text = "Dashboard"
     }
     @Override
