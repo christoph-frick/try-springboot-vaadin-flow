@@ -19,8 +19,7 @@ ext {
     ext {
         groovyVersion = '2.5.0'
         gradleWrapperVersion = '4.8.1'
-        vaadinVersion = '10.0.0'
-        springFlowVersion = '1.0.0.beta7'
+        vaadinVersion = '10.0.1'
     }
     mainClassName = "app.Application" 
 }
@@ -61,8 +60,7 @@ ext['groovy.version'] = groovyVersion
 
 dependencies {
     implementation 'org.codehaus.groovy:groovy'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.springframework.boot:spring-boot-devtools'
     implementation vaadin.platform()
-    implementation "com.vaadin:flow-spring-boot-starter:${springFlowVersion}"
+    implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
+    compileOnly 'org.springframework.boot:spring-boot-devtools'
 }
