@@ -1,7 +1,11 @@
 package app
 
+import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.Composite
+import com.vaadin.flow.component.HasSize
 import com.vaadin.flow.component.HasValue
+import com.vaadin.flow.component.Synchronize
+import com.vaadin.flow.component.Tag
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.html.Div
@@ -54,3 +58,21 @@ class MainLayout extends Composite<Div> {
     }
 }
 
+@Tag('monaco-editor')
+@HtmlImport('bower_components/monaco-editor/monaco-editor.html')
+class MonacoEditor extends Component implements HasSize {
+
+    MonacoEditor() {
+        value = ''
+    }
+
+    @Synchronize('value-changed')
+    String getValue() {
+        element.getProperty('value')
+    }
+
+    void setValue(String value) {
+        element.setProperty('value', value)
+    }
+
+}
