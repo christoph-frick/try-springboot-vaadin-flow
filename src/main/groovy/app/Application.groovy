@@ -17,6 +17,8 @@ import groovy.util.logging.Slf4j
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
 @SpringBootApplication
 class Application extends SpringBootServletInitializer {
@@ -24,6 +26,14 @@ class Application extends SpringBootServletInitializer {
         def app = new SpringApplication(Application)
         // further config...
         app.run(args)
+    }
+}
+
+@RestController
+class HelloWorldController {
+    @GetMapping("/hello")
+    String index() {
+        return "Hello World"
     }
 }
 
