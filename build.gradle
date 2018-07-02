@@ -62,5 +62,6 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy'
     implementation vaadin.platform()
     implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
+    implementation "de.kaesdingeling:hybridmenu:3.0.10.vaadin10", { exclude group: 'com.vaadin' }
     compileOnly 'org.springframework.boot:spring-boot-devtools'
 }
