@@ -60,6 +60,7 @@ ext['groovy.version'] = groovyVersion
 
 dependencies {
     implementation 'org.codehaus.groovy:groovy'
+    implementation 'com.devskiller:jfairy:0.6.2'
     implementation vaadin.platform()
     implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
     compileOnly 'org.springframework.boot:spring-boot-devtools'
