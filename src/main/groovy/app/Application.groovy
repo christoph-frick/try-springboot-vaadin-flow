@@ -5,6 +5,7 @@ import com.vaadin.flow.component.AttachEvent
 import com.vaadin.flow.component.Composite
 import com.vaadin.flow.component.DetachEvent
 import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.checkbox.Checkbox
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.formlayout.FormLayout
@@ -22,6 +23,7 @@ import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 import groovy.util.logging.Slf4j
+import org.github.legioth.field.Field
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
@@ -74,6 +76,12 @@ class MainLayout extends Composite<Div> {
                             binder.writeBean(b)
                             notify(b.toString())
                         }),
+                        new Checkbox("Toggle binder readonly", {
+                            binder.readOnly = it.value
+                        }),
+                        new Checkbox("Toggle field required (no effect?)", {
+                            field.requiredIndicatorVisible = it.value
+                        }),
                 ),
         )
     }
@@ -111,59 +119,10 @@ class DateRangeComponent extends FormLayout {
     }
 }
 
-class DateRangeField extends AbstractCompositeField<DateRangeComponent, DateRangeField, DateRange> {
-
-    private Registration vclStart, vclEnd
-
+class DateRangeField extends DateRangeComponent implements Field<DateRangeField,DateRange> {
     DateRangeField() {
-        super(null)
-    }
-
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent)
-        unregister()
-        register()
-    }
-
-    @Override
-    protected void onDetach(DetachEvent detachEvent) {
-        super.onDetach(detachEvent)
-        unregister()
-    }
-
-    private void register() {
-        vclStart = content.start.addValueChangeListener {
-            setModelValue(new DateRange(it.value, content.end.value), it.fromClient)
-        }
-        vclEnd = content.end.addValueChangeListener {
-            setModelValue(new DateRange(content.start.value, it.value), it.fromClient)
-        }
-    }
-
-    private void unregister() {
-        vclEnd?.remove()
-        vclStart?.remove()
-        vclStart = vclEnd = null
-    }
-
-    @Override
-    protected void setPresentationValue(DateRange newPresentationValue) {
-        content.start.value = newPresentationValue.startDate
-        content.end.value = newPresentationValue.endDate
-    }
-
-    @Override
-    void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
-        // XXX does not work in Groovy: super.setRequiredIndicatorVisible(requiredIndicatorVisible)
-        getElement().setProperty("required", requiredIndicatorVisible)
-        [content.start, content.end]*.requiredIndicatorVisible = requiredIndicatorVisible
-    }
-
-    @Override
-    void setReadOnly(boolean readOnly) {
-        // XXX does not work in Groovy: super.setReadOnly(readOnly)
-        getElement().setProperty("readonly", readOnly)
-        [content.start, content.end]*.readOnly = readOnly
+        Field.initCompositeValue(this, null, { -> new DateRange(start.value, end.value)})
+                .bind(start, { it.startDate })
+                .bind(end, { it.endDate })
     }
 }

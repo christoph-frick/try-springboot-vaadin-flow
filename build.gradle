@@ -62,5 +62,6 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy'
     implementation vaadin.platform()
     implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
+    implementation "org.github.legioth:field:0.9.0"
     compileOnly 'org.springframework.boot:spring-boot-devtools'
 }
