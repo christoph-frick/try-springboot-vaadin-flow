@@ -94,7 +94,9 @@ class DashboardView extends Div {
         binder.bean = new HelloRequest()
         def button = new Button("Go", {
             getUI().ifPresent{ it.navigate("hello/${binder.bean.text}") }
-        })
+        }).tap{
+            element.themeList.add('primary')
+        }
         add(
                 new FormLayout(
                         input,
