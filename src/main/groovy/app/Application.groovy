@@ -1,15 +1,12 @@
 package app
 
+import com.flowingcode.addons.applayout.AppLayout
+import com.flowingcode.addons.applayout.menu.MenuItem
 import com.vaadin.flow.component.Composite
-import com.vaadin.flow.component.HasValue
-import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.html.Div
-import com.vaadin.flow.component.html.H1
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
-import com.vaadin.flow.component.textfield.TextField
-import com.vaadin.flow.data.value.ValueChangeMode
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
@@ -45,22 +42,19 @@ class HelloWorldController {
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 class MainLayout extends Composite<Div> {
     MainLayout() {
-        H1 label
-        TextField input
-        content.add(
-                label = new H1(),
-                input = new TextField().tap {
-                    addValueChangeListener({
-                        label.text = "Hello ${it.value ?: "World"}"
-                    } as HasValue.ValueChangeListener)
-                    valueChangeMode = ValueChangeMode.EAGER
-                    value = "Flow"
-                    focus()
-                },
-                new Button("Greet the server log", {
-                    log.info "Hello ${input.value ?: "World"} to the server log"
-                }),
-        )
+        def app = new AppLayout("Hello Flow")
+        app.menuItems = [
+                new MenuItem("Home", 'home'),
+                new MenuItem("Orders", 'airplane',
+                        new MenuItem("Create", 'create'),
+                        new MenuItem("Search", 'search'),
+                ),
+        ]
+        app.toolbarIconButtons = [
+                new MenuItem("Search", 'search'),
+                new MenuItem("Settings", 'about'),
+        ]
+        content.add(app)
     }
 }
 
