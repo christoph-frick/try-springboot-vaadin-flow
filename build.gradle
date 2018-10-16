@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.2.RELEASE'
-        vaadinFlowPluginVersion = "1.0.0.M3"
+        springBootVersion = '2.0.5.RELEASE'
+        vaadinFlowPluginVersion = "1.0.0.M6"
     }
     repositories {
         mavenCentral()
@@ -17,9 +17,9 @@ buildscript {
 
 ext {
     ext {
-        groovyVersion = '2.5.0'
-        gradleWrapperVersion = '4.8.1'
-        vaadinVersion = '10.0.1'
+        groovyVersion = '2.5.3'
+        gradleWrapperVersion = '4.10.2'
+        vaadinVersion = '11.0.1'
     }
     mainClassName = "app.Application" 
 }
