@@ -13,6 +13,7 @@ import com.vaadin.flow.data.value.ValueChangeMode
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
+import groovy.json.JsonOutput
 import groovy.util.logging.Slf4j
 import org.springframework.boot.Banner
 import org.springframework.boot.SpringApplication
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import org.vaadin.tinymce.TinyMce
 
 @SpringBootApplication
 class Application extends SpringBootServletInitializer {
@@ -63,6 +65,20 @@ class MainLayout extends Composite<Div> {
                 new Button("Greet the server log", {
                     log.info "Hello ${input.value ?: "World"} to the server log"
                 }),
+                new TinyMce().tap{
+                    config = JsonOutput.toJson([
+                            plugins: 'searchreplace visualblocks visualchars code paste code wordcount',
+                            toolbar: 'undo redo | searchreplace | cut copy paste pastetext | bold italic | code',
+                            menubar: false,
+                            height: "400px",
+                            width: "50%",
+                            // inline: true,
+                            visualblocks_default_state: true,
+                            visualchars_default_state: true,
+                            paste_as_text: true,
+                    ])
+                    value = "<strong>Test</strong> it is"
+                }
         )
     }
 }

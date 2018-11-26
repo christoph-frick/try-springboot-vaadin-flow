@@ -62,7 +62,9 @@ ext['groovy.version'] = groovyVersion
 
 dependencies {
     implementation 'org.codehaus.groovy:groovy'
+    implementation 'org.codehaus.groovy:groovy-json'
     implementation vaadin.platform()
     implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
+    implementation "org.vaadin:tinymce-for-flow:1.0"
     compileOnly 'org.springframework.boot:spring-boot-devtools'
 }
