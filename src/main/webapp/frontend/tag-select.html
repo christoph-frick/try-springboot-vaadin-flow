@@ -1,0 +1,38 @@
+<link rel="import" href="./bower_components/polymer/polymer-element.html">
+<link rel="import" href="./bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="./bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="./bower_components/vaadin-icons/vaadin-icons.html">
+
+<dom-module id="tag-select">
+    <template>
+        <style>
+            :host([theme~="horizontal"]) div.selected-item, div.selector {
+                display: inline;
+            }
+        </style>
+        <div>
+            <dom-repeat items="[[selected]]">
+                <template>
+                    <div class="selected-item">
+                        <vaadin-button on-click="deselect" title="Click to remove">
+                            <iron-icon icon="vaadin:tag" slot="prefix"></iron-icon>
+                            [[item.label]]
+                        </vaadin-button>
+                    </div>
+                </template>
+            </dom-repeat>
+            <div class="selector">
+                <vaadin-combo-box id="select" placeholder="Select a tag to add..."></vaadin-combo-box>
+            </div>
+        </div>
+    </template>
+    <script>
+        class TagSelect extends Polymer.Element {
+            static get is() {
+                return 'tag-select'
+            }
+        }
+
+        customElements.define(TagSelect.is, TagSelect)
+    </script>
+</dom-module>
