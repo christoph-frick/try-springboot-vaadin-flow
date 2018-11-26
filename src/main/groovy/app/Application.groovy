@@ -14,6 +14,7 @@ import com.vaadin.flow.router.Route
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 import groovy.util.logging.Slf4j
+import org.springframework.boot.Banner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RestController
 @SpringBootApplication
 class Application extends SpringBootServletInitializer {
     static void main(String[] args) throws Exception {
-        def app = new SpringApplication(Application)
-        // further config...
-        app.run(args)
+        new SpringApplication(Application).tap{
+            // further config...
+            bannerMode = Banner.Mode.OFF
+            run(args)
+        }
     }
 }
 
