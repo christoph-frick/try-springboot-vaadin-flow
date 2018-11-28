@@ -1,7 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '2.1.0.RELEASE'
-        vaadinFlowPluginVersion = "1.0.0.M6"
+        vaadinFlowPluginVersion = "1.0.0.RC3"
     }
     repositories {
         mavenLocal()
@@ -18,15 +18,14 @@ buildscript {
 
 ext {
     ext {
-        groovyVersion = '2.5.3'
-        gradleWrapperVersion = '4.10.2'
+        groovyVersion = '2.5.4'
+        gradleWrapperVersion = '5.0'
         vaadinVersion = '12.0.0.beta2'
     }
     mainClassName = "app.Application" 
 }
 
 apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 apply plugin: "com.devsoap.vaadin-flow"
 apply plugin: 'groovy'
 
@@ -53,7 +52,7 @@ vaadin {
 
 bootRun.systemProperties = System.properties // pass sysprops down to bootRun, so we can add them in configs in intellij
 
-task wrapper(type: Wrapper) {
+wrapper {
     gradleVersion = gradleWrapperVersion
     distributionType = Wrapper.DistributionType.ALL
 }
@@ -61,7 +60,8 @@ task wrapper(type: Wrapper) {
 ext['groovy.version'] = groovyVersion
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy'
+    implementation(enforcedPlatform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
+    implementation(enforcedPlatform("org.codehaus.groovy:groovy:${groovyVersion}"))
     implementation vaadin.platform()
     implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
     compileOnly 'org.springframework.boot:spring-boot-devtools'
