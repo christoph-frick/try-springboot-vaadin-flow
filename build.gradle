@@ -64,5 +64,6 @@ dependencies {
     implementation(enforcedPlatform("org.codehaus.groovy:groovy:${groovyVersion}"))
     implementation vaadin.platform()
     implementation "com.vaadin:vaadin-spring-boot-starter:${vaadinVersion}"
+    implementation "com.github.appreciated:app-layout-addon:2.0.0"
     compileOnly 'org.springframework.boot:spring-boot-devtools'
 }
