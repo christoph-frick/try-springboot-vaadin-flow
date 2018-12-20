@@ -13,6 +13,7 @@ import com.vaadin.flow.data.value.ValueChangeMode
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
+import com.vaadin.flow.theme.material.Material
 import groovy.util.logging.Slf4j
 import org.springframework.boot.Banner
 import org.springframework.boot.SpringApplication
@@ -42,7 +43,7 @@ class HelloWorldController {
 
 @Route('')
 @Slf4j
-@Theme(Lumo)
+@Theme(Material)
 @HtmlImport('frontend:///styles.html')
 @BodySize(height = "100vh", width = "100vw")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
