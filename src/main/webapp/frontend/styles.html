@@ -3,17 +3,15 @@
         html {
             height: auto;
         }
-        body {
-            margin: 0;
-            padding: 1ex 1em;
-
-            --app-primary-color: var(--lumo-primary-color);
-            --app-secondary-color: var(--lumo-body-text-color);
-
-            background-color: var(--lumo-shade-10pct);
-            color: var(--lumo-body-text-color);
-            font-family: var(--lumo-font-family);
-        }
     </style>
 </custom-style>
-
+<dom-module id="x-vaadin-app-layout-theme" theme-for="vaadin-app-layout">
+    <template>
+        <style>
+            [part="navbar"] {
+                background: var(--vaadin-app-layout-navbar-background, linear-gradient(var(--lumo-shade-10pct), var(--lumo-shade-20pct)) var(--lumo-base-color));
+                border-bottom: 1px solid var(--lumo-shade-40pct);
+            }
+        </style>
+    </template>
+</dom-module>
