@@ -1,18 +1,10 @@
 <custom-style>
     <style is="custom-style" include="lumo-colors lumo-typography">
         html {
-            height: auto;
+            --lumo-body-text-color: red;
         }
-        body {
-            margin: 0;
-            padding: 1ex 1em;
-
-            --app-primary-color: var(--lumo-primary-color);
-            --app-secondary-color: var(--lumo-body-text-color);
-
-            background-color: var(--lumo-shade-10pct);
-            color: var(--lumo-body-text-color);
-            font-family: var(--lumo-font-family);
+        [theme~="dark"] {
+            --lumo-body-text-color: yellow;
         }
     </style>
 </custom-style>
