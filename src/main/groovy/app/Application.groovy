@@ -6,6 +6,7 @@ import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.details.Details
 import com.vaadin.flow.component.html.*
 import com.vaadin.flow.component.login.LoginForm
+import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
 import com.vaadin.flow.component.richtexteditor.RichTextEditor
@@ -47,7 +48,7 @@ class HelloWorldController {
 @HtmlImport('frontend:///styles.html')
 @BodySize(height = "100vh", width = "100vw")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-class MainLayout extends Composite<Div> {
+class MainLayout extends Composite<VerticalLayout> {
     MainLayout() {
         content.add(
                 new H1("V13 components"),
