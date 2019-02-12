@@ -9,7 +9,6 @@ import com.vaadin.flow.component.login.LoginForm
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
-import com.vaadin.flow.component.richtexteditor.RichTextEditor
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.NumberField
 import com.vaadin.flow.component.timepicker.TimePicker
@@ -53,8 +52,7 @@ class MainLayout extends Composite<VerticalLayout> {
     MainLayout() {
         content.add(
                 new H1("V13 components"),
-                *[new RichTextEditor(),
-                  new LoginForm(),
+                *[new LoginForm(),
                   new Accordion().tap {
                       (1..3).each {
                           add("Item $it", new H3("Some Item $it"))
