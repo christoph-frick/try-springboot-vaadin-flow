@@ -1,18 +1,17 @@
 package app
 
 import com.vaadin.flow.component.Composite
-import com.vaadin.flow.component.accordion.Accordion
+import com.vaadin.flow.component.Key
+import com.vaadin.flow.component.Shortcuts
 import com.vaadin.flow.component.dependency.HtmlImport
-import com.vaadin.flow.component.details.Details
-import com.vaadin.flow.component.html.*
-import com.vaadin.flow.component.login.LoginForm
+import com.vaadin.flow.component.html.H1
+import com.vaadin.flow.component.html.Span
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
-import com.vaadin.flow.component.textfield.EmailField
-import com.vaadin.flow.component.textfield.NumberField
-import com.vaadin.flow.component.timepicker.TimePicker
 import com.vaadin.flow.router.Route
+import com.vaadin.flow.server.Command
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.material.Material
 import groovy.util.logging.Slf4j
@@ -50,24 +49,30 @@ class HelloWorldController {
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 class MainLayout extends Composite<VerticalLayout> {
     MainLayout() {
-        content.add(
-                new H1("V13 components"),
-                *[new LoginForm(),
-                  new Accordion().tap {
-                      (1..3).each {
-                          add("Item $it", new H3("Some Item $it"))
-                      }
-                  },
-                  new Details("Show details", new Div(new Span("This is the details"))),
-                  new EmailField(),
-                  new NumberField(),
-                  new TimePicker(),
-                ].collect {
-                    new Div(
-                            new H2(it.getClass().simpleName),
-                            it
+        def selected = 0
+        def selectable = (1..4).collect { new Span("$it") }
+        def select = { col ->
+            selectable*.style*.set('background-color', 'white')
+            selectable[col].style.set('background-color', 'red')
+        }
+        select(selected)
+        def commandBuilder = { offset ->
+            new Command() {
+                @Override
+                void execute() {
+                    select(
+                            selected = (selected + offset) % selectable.size()
                     )
                 }
+            }
+        }
+
+        Shortcuts.addShortcutListener(this, commandBuilder(-1), Key.ARROW_LEFT)
+        Shortcuts.addShortcutListener(this, commandBuilder(+1), Key.ARROW_RIGHT)
+
+        content.add(
+                new H1("Keyboard shortcuts.  Use ← and →"),
+                new HorizontalLayout(*selectable)
         )
     }
 }
