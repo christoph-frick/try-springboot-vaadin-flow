@@ -12,6 +12,7 @@ import com.vaadin.flow.component.page.Viewport
 import com.vaadin.flow.component.richtexteditor.RichTextEditor
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.NumberField
+import com.vaadin.flow.component.timepicker.TimePicker
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.material.Material
@@ -62,6 +63,7 @@ class MainLayout extends Composite<VerticalLayout> {
                   new Details("Show details", new Div(new Span("This is the details"))),
                   new EmailField(),
                   new NumberField(),
+                  new TimePicker(),
                 ].collect {
                     new Div(
                             new H2(it.getClass().simpleName),
