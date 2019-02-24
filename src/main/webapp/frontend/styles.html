@@ -1,3 +1,16 @@
+<dom-module id="vertical-layout-different-spacing" theme-for="vaadin-vertical-layout">
+    <template>
+        <style>
+            :host([theme~="spacing"][theme~="xs"]) ::slotted(*) {
+                margin-top: 8px;
+            }
+            :host([theme~="spacing"][theme~="xl"]) ::slotted(*) {
+                margin-top: 32px;
+            }
+        </style>
+    </template>
+</dom-module>
+
 <custom-style>
     <style>
     </style>
