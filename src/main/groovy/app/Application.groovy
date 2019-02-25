@@ -1,6 +1,8 @@
 package app
 
+
 import com.vaadin.flow.component.Composite
+import com.vaadin.flow.component.ItemLabelGenerator
 import com.vaadin.flow.component.accordion.Accordion
 import com.vaadin.flow.component.dependency.HtmlImport
 import com.vaadin.flow.component.details.Details
@@ -9,6 +11,7 @@ import com.vaadin.flow.component.login.LoginForm
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.page.BodySize
 import com.vaadin.flow.component.page.Viewport
+import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.NumberField
 import com.vaadin.flow.component.timepicker.TimePicker
@@ -22,6 +25,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+
+import java.text.NumberFormat
 
 @SpringBootApplication
 class Application extends SpringBootServletInitializer {
@@ -53,6 +58,11 @@ class MainLayout extends Composite<VerticalLayout> {
         content.add(
                 new H1("V13 components"),
                 *[new LoginForm(),
+                  new Select<BigDecimal>(1.0G, 2.0G, 3.0G).tap {
+                      textRenderer = {
+                          NumberFormat.currencyInstance.format(it)
+                      } as ItemLabelGenerator<BigDecimal>
+                  },
                   new Accordion().tap {
                       (1..3).each {
                           add("Item $it", new H3("Some Item $it"))
